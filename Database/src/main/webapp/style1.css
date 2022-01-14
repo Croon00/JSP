@@ -1,0 +1,5 @@
+@charset "utf-8";
+/* 테이블 레이아웃 */
+h1, h2 {text-align:center}
+table {border-collapse:collapse; margin:20px auto}
+th, td { padding:10px; border:1px solid black; text-align:center}

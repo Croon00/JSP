@@ -1,0 +1,40 @@
+@charset "utf-8";
+
+#menu {
+	width: 800px;
+	margin: 20px auto;
+	background-color: gray;
+	padding: 10px;
+	text-align: center;
+}
+
+#menu li {
+	display: inline-block;
+	width: 30%
+}
+
+#menu a {
+	text-decoration: none;
+	color: white
+}
+
+#menu a:hover {
+	text-decoration: underline
+}
+
+.contents {
+	text-align: center;
+	width: 800px;
+	margin: 20px auto;
+}
+
+.contents p {
+	text-align:left;
+	line-height:200%
+}
+
+
+.contents img {
+	width:30%;
+	height:auto;
+}

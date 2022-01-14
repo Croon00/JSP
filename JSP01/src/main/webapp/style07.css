@@ -1,0 +1,20 @@
+/* ex07.jsp 파일과 연결 */
+@charset "utf-8";
+
+/* 모든 글문단 중앙정렬  */
+* { text-align:center }
+
+#top {
+	background-color: lightblue;
+	padding: 10px;
+	width: 80%;
+	margin: 10px auto;
+}
+
+#bottom {
+	background-color: orange;
+	color: white;
+	padding: 10px;
+	width: 80%;
+	margin: 10px auto;
+}

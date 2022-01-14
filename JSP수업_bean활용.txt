@@ -1,0 +1,451 @@
+---------------------------------
+MVC
+---------------------------------
+
+모델-뷰-컨트롤러(model–view–controller, MVC)는 소프트웨어 공학에서 
+사용되는 소프트웨어 디자인 패턴이다. 
+
+목적은?
+- 사용자 인터페이스와 비지니스로직을 분리시킨다
+
+
+이 패턴을 성공적으로 사용하면, 사용자 인터페이스로부터 비즈니스 로직을 분리하여 
+애플리케이션의 시각적 요소나 그 이면에서 실행되는 비즈니스 로직을 서로 영향 없이 
+쉽게 고칠 수 있는 애플리케이션을 만들 수 있다. 
+
+MVC에서 모델은 애플리케이션의 정보(데이터)를 나타내며, 
+뷰는 텍스트, 체크박스 항목 등과 같은 사용자 인터페이스 요소를 나타내고, 
+컨트롤러는 데이터와 비즈니스 로직 사이의 상호동작을 관리한다.
+
+// 구성 요소 
+컨트롤러는 모델에 명령을 보냄으로써 모델의 상태를 변경할 수 있다.  
+컨트롤러가 관련된 뷰에 명령을 보냄으로써 모델의 표시 방법을 바꿀 수 있다. 
+
+모델은 모델의 상태에 변화가 있을 때 컨트롤러와 뷰에 이를 통보한다. 
+이와 같은 통보를 통해서 뷰는 최신의 결과를 보여줄 수 있고, 
+컨트롤러는 모델의 변화에 따른 적용 가능한 명령을 추가·제거·수정할 수 있다. 
+어떤 MVC 구현에서는 통보 대신 뷰나 컨트롤러가 직접 모델의 상태를 읽어 오기도 한다.
+
+
+뷰는 사용자가 볼 결과물을 생성하기 위해 모델로부터 정보를 얻어 온다.
+
+
+---------------------------------
+  모델1  VS   모델2
+---------------------------------
+모델1 방식은 JSP가 데이터 입력과 출력을 담당하고, 자바빈이 데이터 처리를 담당한다.
+
+JSP : 입력 + 출력
+자바빈 : 데이터 처리 담당
+(데이터가 계속 업데이트 되는 경우)
+(간단)
+
+모델2방식은 서블릿이 데이터 입력과 데이터 처리를 담당하고, 
+그 처리된 데이터를 자바빈(데이터빈)에 담아서, JSP에게 전달한다.
+
+JSP : 뷰
+자바빈 : 데이터 처리
+DAO : Control, 입출력 +  데이터 조작
+
+
+---------------------------------
+콜렉션이란?
+---------------------------------
+JAVA
+- 기본형 : int, float, char, boolean
+- 참조형 : String, 배열, 클래스
+
+
+컬렉션(Collection)이란 데이터의 집합, 그룹을 의미하며 
+JCF(Java Collections Framework)는 
+이러한 데이터, 자료구조인 컬렉션과 
+이를 구현하는 클래스를 정의하는 인터페이스를 제공한다.
+
+// Set : 순서를 유지하지 않는 데이터의 집합으로 데이터의 중복을 허용하지 않는다.
+ HashSet ,  TreeSet
+//  List :  순서가 있는 데이터의 집합으로 데이터의 중복을 허용한다.
+ LinkedList, Vector, ArrayList
+//  Queue : List와 유사
+ LinkedList, PriorityQueue
+//  Map :  
+Hashtable, HashMap, TreeMap 
+ 키(Key), 값(Value)의 쌍으로 이루어진 데이터으 집합으로,
+순서는 유지되지 않으며 키(Key)의 중복을 허용하지 않으나 
+값(Value)의 중복은 허용한다.
+
+---------------------------------
+벡터(Vector)
+---------------------------------
+ArrayList와 LinkedList와 같이 리스트를 구체화한 클래스
+add()
+size()	
+
+
+
+-----------------------------------------------
+  자바 빈즈를 이용한 데이타베이스 연동 
+-----------------------------------------------
+
+자바빈 
+DB컨트롤 자바 
+JSP
+
+작업 과정 :
+- 데이터베이스에 테이블 생성
+- 자바빈 생성
+- DAO 컨트롤 생성
+- JSP 생성
+- 부트 스트랩 디자인 적용
+
+
+
+(1) DB 생성 
+
+DROP TABLE tblRegister;
+CREATE TABLE tblRegister(
+	userId VARCHAR2(12) NOT NULL PRIMARY KEY,
+	pwd VARCHAR2(10) NOT NULL,
+	name NVARCHAR2(5) NULL,
+	email VARCHAR2(30) NULL,
+	phone VARCHAR2(15) NULL
+);
+
+
+INSERT INTO tblRegister VALUES ('code8989', '12341234', '마동탁', 'tester1@java.com', '010-6767-9090');
+INSERT INTO tblRegister VALUES ('maria6767', '12341234', '임수향', 'tester5@java.com', '010-7864-9090');
+INSERT INTO tblRegister VALUES ('curry1212', '23452345', '커리', 'curry5@java.com', '010-7896-5656');
+
+SELECT * FROM tblRegister;
+
+
+
+(2) 자바빈 파일 생성 
+beans 패키지 생성 후 
+RegisterBean.java
+
+
+package beans;
+
+public class RegisterBean {
+	private String userId;
+	private String pwd;
+	private String name;
+	private String email;
+	private String phone;
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getPwd() {
+		return pwd;
+	}
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	
+}
+
+
+
+(3) DB 컨트롤 자바 파일 생성 
+beans 패키지 안에
+RegisterMgr.java
+
+
+package beans;
+
+import java.sql.*;
+import java.util.*;
+
+public class RegisterMgr {
+	// private final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
+	private final String JDBC_DRIVER = "oracle.jdbc.OracleDriver";
+	private final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+	private final String USER = "scott";
+	private final String PASS = "tiger";
+
+	public RegisterMgr() {
+		try{
+			Class.forName(JDBC_DRIVER);
+			System.out.println("OK: JDBC 드라이버 로딩 성공");
+		}catch(Exception e){
+			System.out.println("Error : JDBC 드라이버 로딩 실패");
+		}
+	}
+	
+	// 레코드 전체 조회 
+// 전체 레코드 조회 
+DB 테이블 요청 
+sql 구문 실행 
+   : select * from tblRegister
+sql 구문 실행 결과 => ResultSet 
+ResultSet => Vector 
+Vector => JSP
+
+입력 =>  X
+출력 => Vector 
+
+	public Vector<RegisterBean> getRegisterList() {
+		// 초기화
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		// 벡터 선언
+		Vector<RegisterBean> vlist = new Vector<RegisterBean>();
+		
+		try {
+			conn = DriverManager.getConnection(URL, USER, PASS);
+			// 전체 레코드 조회
+			String sql = "select * from tblRegister";
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while (rs.next()) {
+				// 자바빈 선언
+				RegisterBean bean = new RegisterBean();
+				// 자바빈의 멤버 필드에 값 지정
+				bean.setUserId (rs.getString("userId"));
+				bean.setPwd (rs.getString("pwd"));
+				bean.setName (rs.getString("name"));
+				bean.setEmail (rs.getString("email"));
+				bean.setPhone (rs.getString("phone"));
+				// 벡터에 저장
+				vlist.addElement(bean);
+			}
+		} catch (Exception ex) {
+			System.out.println("Exception" + ex);
+		} finally {
+			if(rs!=null)   try{rs.close();}   catch(SQLException e){}
+			if(stmt!=null) try{stmt.close();} catch(SQLException e){}
+			if(conn!=null) try{conn.close();} catch(SQLException e){}
+		}
+		// 벡터 반환(테이블의 모든 레코드가 저장된)
+		return vlist;
+	}
+	
+	
+		// 특정 레코드 조회 
+		public RegisterBean getRegister(String userId) {
+			Connection conn = null;
+			Statement stmt = null;
+			ResultSet rs = null;
+			
+			// 자바빈 선언
+			RegisterBean bean = new RegisterBean();
+			
+			try {
+				// DB에 연결해서 userId에 해당하는 레코드 반환
+				conn = DriverManager.getConnection(URL, USER, PASS);
+				//String sql = "select * from tblRegister where userId = '" + userId + "'";
+				//System.out.println(sql);
+				//stmt = conn.createStatement();
+				//rs = stmt.executeQuery(sql);
+				
+				// PreparedStatement 객체 생성 
+				PreparedStatement pstmt = null;
+				String sql = "select * from tblRegister where userId = ? ";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, userId);
+				rs = pstmt.executeQuery();
+				
+				
+				// 계속해서 while로 돌려서 받는것이 아닌 if로 찾아서 넣기
+				if (rs.next()) { 
+					bean.setUserId (rs.getString("userId"));
+					bean.setPwd (rs.getString("pwd"));
+					bean.setName (rs.getString("name"));
+					bean.setEmail (rs.getString("email"));
+					bean.setPhone (rs.getString("phone"));
+				}
+
+			} catch (Exception ex) {
+				System.out.println("Exception" + ex);
+			} finally {
+				if(rs!=null)   try{rs.close();}   catch(SQLException e){}
+				if(stmt!=null) try{stmt.close();} catch(SQLException e){}
+				if(conn!=null) try{conn.close();} catch(SQLException e){}
+			}
+			
+			return bean;
+		}
+	
+}
+
+
+(4) 전체 조회 
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, beans.*"%>
+<jsp:useBean id="regMgr" class="beans.RegisterMgr" />
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bean을 사용한 데이터베이스 연동</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<h2>Bean를 사용한 데이터베이스 연동 예제</h2>
+	<hr />
+	<table>
+		<tr>
+			<th>USERID</th>
+			<th>PASSWD</th>
+			<th>NAME</th>
+			<th>EMAIL</th>
+			<th>PHONE</th>
+		</tr>
+		<%
+		// DB 테이블의 전체레코드를 벡터에 저장
+		// 벡터 참조 변수에 getRegisterList() 호출해서 저장
+		// Vector<자바빈클래스명> 참조변수 = DAO식별자.메서드명()
+		Vector<RegisterBean> vlist = regMgr.getRegisterList();
+		// 레코드 총 갯수
+		int counter = vlist.size();
+		// RegisterBean 자바빈 각 레코드 반환
+		for (int i = 0; i < vlist.size(); i++) {
+			// RegisterBean bean = (RegisterBean)vlist.elementAt(i);
+			RegisterBean bean = vlist.get(i);
+		%>
+		<!-- 테이블 행으로 html방식으로 출력 -->
+		<tr>
+			<td><%=bean.getUserId()%></td>
+			<td><%=bean.getPwd()%></td>
+			<td><%=bean.getName()%></td>
+			<td><%=bean.getEmail()%></td>
+			<td><%=bean.getPhone()%></td>
+		</tr>
+		<%
+		} // for ending
+		%>
+	</table>
+	<p>total records :	<%= counter %>
+</body>
+</html>
+
+
+
+
+(5) 전체 + 상세 조회 
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, beans.*"%>
+<jsp:useBean id="regMgr" class="beans.RegisterMgr" />
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bean을 사용한 데이터베이스 연동</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<h2>Bean를 사용한 데이터베이스 연동 예제</h2>
+	<hr />
+	<table>
+		<tr>
+			<th>USERID</th>
+			<th>NAME</th>
+			<th>DETAIL</th>
+		</tr>
+		<%
+		Vector<RegisterBean> vlist = regMgr.getRegisterList();
+		int counter = vlist.size();
+		for (int i = 0; i < vlist.size(); i++) {
+			// RegisterBean bean = (RegisterBean)vlist.elementAt(i);
+			RegisterBean bean = vlist.get(i);
+		%>
+		<tr>
+			<td><%=bean.getUserId()%></td>
+			<td><%=bean.getName()%></td>
+			<td> <a class="btn" href="ex07_info.jsp?userId=<%=bean.getUserId()%>">more</a></td>
+		</tr>
+		<%
+		}
+		%>
+	</table>
+	<p>total records :	<%= counter %>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, beans.*"%>
+<jsp:useBean id="regMgr" class="beans.RegisterMgr" />
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bean을 사용한 데이터베이스 연동</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<h2>레코드 상세</h2>
+	<hr />
+	<table>
+		<tr>
+			<th>USERID</th>
+			<th>PASSWD</th>
+			<th>NAME</th>
+			<th>EMAIL</th>
+			<th>PHONE</th>
+		</tr>
+		<%
+		// 하이퍼링크로 전달받은 userId 값을 변수에 저장
+		String userId = request.getParameter("userId");
+		// 자바빈 선언
+		RegisterBean bean = new RegisterBean();
+		// getRegister(userId) 메서드 호출 => 자바빈에 저장
+		bean = regMgr.getRegister(userId);
+		%>
+		<tr>
+			<td><%=bean.getUserId()%></td>
+			<td><%=bean.getPwd()%></td>
+			<td><%=bean.getName()%></td>
+			<td><%=bean.getEmail()%></td>
+			<td><%=bean.getPhone()%></td>
+		</tr>
+	</table>
+</body>
+</html>
+
+
+
